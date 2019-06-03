@@ -22,7 +22,7 @@ import matplotlib.pyplot as plt
 fig, ax = plt.subplots()
 
 print(datetime.datetime.now().time())
-db = sql.connect(host="localhost",user="loubna", password="10ubn4", database="sdss")
+db = sql.connect(host="localhost",user="", password="", database="sdss")
 c = db.cursor()
 cmd='''SELECT spaxID, objID, KE08 FROM dr14_metallicities'''
 try:
