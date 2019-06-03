@@ -22,9 +22,9 @@ import matplotlib.pyplot as plt
 fig, ax = plt.subplots()
 
 print(datetime.datetime.now().time())
-db = sql.connect(host="localhost",user="", password="", database="sdss")
+db = sql.connect(host="***",user="***", password="***", database="***")
 c = db.cursor()
-cmd='''SELECT spaxID, objID, KE08 FROM dr14_metallicities'''
+cmd='''SELECT ***, ***, *** FROM ***'''
 try:
     c.execute(cmd)
     rows= c.fetchall() #Fetch all (remaining) rows of a query result, returning them as a list of tuples.
@@ -32,7 +32,6 @@ except:
     pass
 db.close()
 print(datetime.datetime.now().time())
-#print(len(rows))
 
 #This should select the spaxel ID, the objid, and the metallicity quantity from the database.
 spaxid=np.asarray([])
