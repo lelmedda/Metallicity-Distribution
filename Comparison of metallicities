@@ -1,1 +1,39 @@
 
+#matplotlib inline
+import matplotlib.pyplot as plt
+plt.style.use('seaborn-whitegrid')
+import numpy as np
+
+m1=[1,2,3]
+m2 = [2,3,4]
+m3=[1,2,3]
+
+#all_metal is a dictionary where the metallicities are named by numbers from  1 to 11 and their values 
+all_metal = {1:m1 , 2:m2, 3:m3}
+
+i=1
+fig = plt.figure()
+while( i <= len(all_metal) ): # i is the metalicity in x axis
+  # plot i as a function of all others 
+  for metal  in  all_metal.keys():
+    metalx = all_metal.get(metal)
+    metaly = all_metal.get(i)
+
+    print(metalx)
+    print(metaly)
+  
+
+    plt.plot(metalx,metaly)
+    # naming the x axis 
+    plt.xlabel(str(i)+' - axis') 
+    # naming the y axis 
+    plt.ylabel(str(metal)+' - axis') 
+      
+    # giving a title to my graph
+    plt.title('Plot of '+str(i)+'vs'+str(metal) ) 
+    plt.savefig('metallicity_comparison'+str(i)+'vs'+str(metal)+'.pdf')
+    # function to show the plot 
+    plt.show()  
+  i=i+1
+
+       
