@@ -1,39 +1,71 @@
-
 #matplotlib inline
 import matplotlib.pyplot as plt
 plt.style.use('seaborn-whitegrid')
 import numpy as np
+import numpy as np
+import matplotlib
+from pylab import *
+import warnings
+import mysql.connector as sql
+import datetime
+import mysql.connector
+from mysql.connector import Error
+from mysql.connector import errorcode
+import matplotlib.pyplot as plt
+fig, ax = plt.subplots()
+from scipy import stats
+print(datetime.datetime.now().time())
+db = sql.connect(host="localhost",user="loubna", password="10ubn4", database="sdss")
+c = db.cursor()
+cmd='''SELECT  KE08_mw ,Z94_mw, C17_O3N2_mw,  C17_N2_mw   FROM dr15_metallicities'''
 
-m1=[1,2,3]
-m2 = [2,3,4]
-m3=[1,2,3]
+try:
 
-#all_metal is a dictionary where the metallicities are named by numbers from  1 to 11 and their values 
-all_metal = {1:m1 , 2:m2, 3:m3}
+    c.execute(cmd)
+    rows = c.fetchall() #Fetch all (remaining) rows of a query result, returning them as a list of tuples.
+except:
+    pass
+db.close()
+print(datetime.datetime.now().time())
+#This should select the spaxel ID, the objid, and the metallicity quantity from the database.
+m1 =np.asarray([])
+m2= np.asarray([])
+m3 =np.asarray([])
+m4 = np.asarray([])
+
+
+rows = np.asarray(rows) #has all the data selected in cmd
+
+print(rows) #mainly None values metallicities
+
+print(spaxid)
+print(ID )
+print(z )
+
+#all_metal is a dictionary where the metallicities are named by numbers from  1 to 11 and their values
+#all_metal = {1:m1 , 2:m2, 3:m}
 
 i=1
 fig = plt.figure()
 while( i <= len(all_metal) ): # i is the metalicity in x axis
-  # plot i as a function of all others 
+  # plot i as a function of all others
   for metal  in  all_metal.keys():
     metalx = all_metal.get(metal)
     metaly = all_metal.get(i)
 
     print(metalx)
     print(metaly)
-  
 
-    plt.plot(metalx,metaly)
-    # naming the x axis 
-    plt.xlabel(str(i)+' - axis') 
-    # naming the y axis 
-    plt.ylabel(str(metal)+' - axis') 
-      
+
+    #plt.plot(metalx,metaly)
+    # naming the x axis
+    #plt.xlabel(str(i)+' - axis')
+    # naming the y axis
+    #plt.ylabel(str(metal)+' - axis')
+
     # giving a title to my graph
-    plt.title('Plot of '+str(i)+'vs'+str(metal) ) 
-    plt.savefig('metallicity_comparison'+str(i)+'vs'+str(metal)+'.pdf')
-    # function to show the plot 
-    plt.show()  
+    plt.title('Plot of '+str(i)+'vs'+str(metal) )
+    #plt.savefig('metallicity_comparison'+str(i)+'vs'+str(metal)+'.pdf')
+    # function to show the plot
+    #plt.show()
   i=i+1
-
-       
