@@ -95,7 +95,7 @@ for key1, val1 in all_metal.items():
     #subfigure for axis
 
 
-            hb = ax1.hexbin(val1, val2, gridsize=200, cmap='inferno')
+            hb = ax1.hexbin(val1, val2, gridsize=200, cmap='inferno',mincnt=1)
             ax1.grid()
             plotted[(key1,key2)] = True
             plotted[(key2,key1)] = True
