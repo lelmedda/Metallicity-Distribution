@@ -1,4 +1,3 @@
-#matplotlib inline
 import matplotlib.pyplot as plt
 plt.style.use('seaborn-whitegrid')
 import numpy as np
@@ -95,7 +94,7 @@ for key1, val1 in all_metal.items():
     #subfigure for axis
 
 
-            hb = ax1.hexbin(val1, val2, gridsize=200, cmap='inferno',mincnt=1)
+            ax1.hexbin(val1, val2, gridsize=200, cmap='inferno', mincnt=1  )
             ax1.grid()
             plotted[(key1,key2)] = True
             plotted[(key2,key1)] = True
@@ -104,8 +103,8 @@ for key1, val1 in all_metal.items():
             ax1.set_xlabel(key1)
             # naming the y axis
             ax1.set_xlabel(key2)
-            ax1.set_title("Plot comparaison between metallicity",key1,"and ",key2)
+            #ax1.set_title("Plot comparaison between metallicity"+str(key1)+" and "+str(key2))
             # giving a title to graph
-            #plt.title('Plot of '+key1+'vs'+key2 )
-            plt.savefig('metallicity_comparison'+key1+'vs'+key2+'.pdf')
-            plt.show()
+            ax1.set_title('Plot of '+str(key1)+' vs '+str(key2))
+            fig.savefig('metallicity_comparison '+str(key1)+' vs '+str(key2)+'.pdf')
+            fig.show()
