@@ -1,0 +1,72 @@
+import pygtc
+import matplotlib.pyplot as plt
+plt.style.use('seaborn-whitegrid')
+import numpy as np
+import matplotlib
+from pylab import *
+import warnings
+import mysql.connector as sql
+import datetime
+import mysql.connector
+from mysql.connector import Error
+from mysql.connector import errorcode
+import matplotlib.pyplot as plt
+fig, ax = plt.subplots()
+from scipy import stats
+
+
+print(datetime.datetime.now().time())
+db = sql.connect(host="localhost",user="loubna", password="10ubn4", database="sdss")
+c = db.cursor()
+cmd='''SELECT
+Z94_mw,
+ M91_mw,
+ KK04_mw,
+ KE08_mw ,
+ D16_mw   ,
+ PP04_O3N2_mw,
+ PP04_N2_mw   ,
+ M13_N2_mw     ,
+ M13_O3N2_mw  ,
+ C17_O3N2_mw   ,
+ C17_N2_mw   FROM dr15_metallicities
+
+where
+Z94_mw is not NULL and
+M91_mw  is not NULL and
+KK04_mw  is not NULL and
+KE08_mw  is not NULL and
+D16_mw    is not NULL and
+PP04_O3N2_mw is not NULL and
+PP04_N2_mw    is not NULL and
+M13_N2_mw     is not NULL and
+M13_O3N2_mw   is not NULL and
+C17_O3N2_mw    is not NULL and
+C17_N2_mw is not NULL  '''
+
+try:
+
+    c.execute(cmd)
+
+    rows = c.fetchall() #Fetch all (remaining) rows of a query result, returning them as a list of tuples.
+
+except:
+    pass
+
+db.close()
+print(datetime.datetime.now().time())
+#This should select the spaxel ID, the objid, and the metallicity quantity from the database.
+
+
+rows = np.asarray(rows) #has all the data selected in cmd
+
+num_col = len(rows[0])
+#all_metal = {1: rows[:,0] , 2:rows[:,1], 3:m}
+#dim = np.ndim(rows)
+all_metal = {}
+#dim = dim-1
+for k in range(0,num_col):
+    all_metal[k] = rows[:,k]
+
+
+GTC = pygtc.plotGTC(chains=[all_metal.values,all_metal.values])
