@@ -1,1 +1,1 @@
-# Met-Dist
+# Metallicity Distribution
