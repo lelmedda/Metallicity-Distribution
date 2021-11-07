@@ -11,41 +11,43 @@ import matplotlib.pyplot as plt
 fig, ax = plt.subplots()
 from scipy import stats
 
+def get_data():
+    print(datetime.datetime.now().time())
+    db = sql.connect(host="localhost",user="loubna", password="10ubn4", database="sdss")
+    c = db.cursor()
+    cmd='''SELECT spaxID, objID, KE08 FROM dr14_metallicities'''
+    try:
+        c.execute(cmd)
+        rows= c.fetchall() #Fetch all (remaining) rows of a query result, returning them as a list of tuples.
+    except:
+        pass
 
-print(datetime.datetime.now().time())
-db = sql.connect(host="localhost",user="loubna", password="10ubn4", database="sdss")
-c = db.cursor()
-cmd='''SELECT spaxID, objID, KE08 FROM dr14_metallicities'''
-try:
-    c.execute(cmd)
-    rows= c.fetchall() #Fetch all (remaining) rows of a query result, returning them as a list of tuples.
-except:
-    pass
+    db.close()
+    print(datetime.datetime.now().time())
 
-db.close()
-print(datetime.datetime.now().time())
-
-#This should select the spaxel ID, the objid, and the metallicity quantity from the database.
-spaxid=np.asarray([])
-ID = np.asarray([])
-z = np.asarray([])
-rows = np.asarray(rows)
-
-
-#print('row',rows)
-#print('d',spaxid)
-#print('f',ID )
-#print('e',z )
+   # initialize arrays for the spaxel ID, the objid, and the metallicity quantity
+    spaxid=np.asarray([])
+    ID = np.asarray([])
+    z = np.asarray([])
+    
+   
+    #print('row',rows)
+    #print('d',spaxid)
+    #print('f',ID )
+    #print('e',z )
+    
+    #   This should select the spaxel ID, the objid, and the metallicity quantity from the database.
+    rows = np.asarray(rows)
+        
+    spaxid=rows[:,0]
+    ID = rows[:,1]
+    z=rows[:,2].astype(float)
 
 
-spaxid=rows[:,0]
-ID = rows[:,1]
-z=rows[:,2].astype(float)
-
-
-print(spaxid)
-print(ID )
-print(z )
+    #print(spaxid)
+    #print(ID )
+    #print(z )
+    return  spaxid, ID, z 
 
 xy = spaxid
 symmetric_galaxies = []
@@ -54,21 +56,30 @@ find_quadrant = {}
 count = 0
 diff_q = []
 
+def break_spaxels(xy):
+    '''
+      Split spaxid to two arrays x and y
+    '''
+    x=np.asarray([])
+    y=np.asarray([])
+    
+    for entry in xy:
+        coord=entry.split('_')
+        x=np.append(x, float(coord[1]))
+        y=np.append(y, float(coord[2]))
+        
+    return x, y
+
+spaxid, ID, z = get_data()
+
 for i in range(0,len(np.unique(ID))):
     slice_xy=xy[np.where(ID==(np.unique(ID)[i]))]
     slice_z=z[np.where(ID==(np.unique(ID)[i]))]
     sort=slice_xy.argsort()
     sorted_spax=slice_xy[sort]
     sorted_metal=slice_z[sort]
-
-    def break_spaxels(xy):
-        x=np.asarray([])
-        y=np.asarray([])
-        for entry in xy:
-            coord=entry.split('_')
-            x=np.append(x, float(coord[1]))
-            y=np.append(y, float(coord[2]))
-        return x, y
+    
+    # break_spaxels(xy) use to be here
 
     x, y = break_spaxels(sorted_spax)
     new_sorted_metal = []
