@@ -13,8 +13,8 @@ from scipy import stats
 
 def get_data():
     '''
-        Get the following rows from database:
-        paxID, objID, KE08 FROM dr14_metallicities
+    Get the following rows from database:
+    paxID, objID, KE08 FROM dr14_metallicities
     
     '''
     print(datetime.datetime.now().time())
@@ -46,7 +46,7 @@ def get_data():
 
 def break_spaxels(xy):
     '''
-      Split spaxid to two arrays x and y
+    Split spaxid to two arrays x and y
     '''
     x=np.asarray([])
     y=np.asarray([])
@@ -60,7 +60,7 @@ def break_spaxels(xy):
 
 def get_center(new_sorted_metal,x,y):
     '''
-        Divide into 4 quadrants
+    Divide into 4 quadrants
     '''
     
     # should this actually be a minus or +
@@ -84,7 +84,7 @@ def get_center(new_sorted_metal,x,y):
 
 def clean_data(sorted_metal):
   '''
-     Clean data of Nan/ Nonetype values
+  Clean data of Nan/ Nonetype values
   '''
     new_sorted_metal = []
     for entryy in sorted_metal:
@@ -145,7 +145,7 @@ def get_count(q1, q2, q3, q4):
 
 def plot(d):
     '''
-        Plot count 
+    Plot count 
     '''
     plt.hist(d.values(), bins = 'rice', histtype='stepfilled', color='blue')
     plt.xlabel('inconsistant quadrants')
@@ -159,6 +159,8 @@ def main():
     spaxid, ID, z = get_data()
 
     #   Initialize main variables
+    #   Change variable name
+    #   5 Signa constant 
     sig = 0.999999426696856
     xy = spaxid
     symmetric_galaxies = []
